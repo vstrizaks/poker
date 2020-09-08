@@ -5,8 +5,12 @@ from functions import *
 from functions import check_two_pairs
 
 for str_line in stdin:
-    board = str_line.split(" ", 1)[0]
-    hands = str_line.split(" ", 1)[1].split()
+    try:
+        board = str_line.split(" ", 1)[0]
+        hands = str_line.split(" ", 1)[1].split()
+    except Exception:
+        print("Incorrect input. Example: 4cKs4h8s7s Ad4s Ac4d As9s KhKd 5d6d")
+        continue
 
     board_list = wrap(board, 2)
     hands_dict = {i: hands[i] for i in range(len(hands))}
