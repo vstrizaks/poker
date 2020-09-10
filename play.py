@@ -56,10 +56,6 @@ def play_poker(board, hands, test_run=False):
 
         b, high_card_in_combination, kicker = check_two_pairs(board_and_hand)
         if b:
-            # print("board_and_hand: " + str(board_and_hand))
-            # print("high_card_in_combination: " + str(high_card_in_combination))
-            # print("kicker: " + str(kicker))
-            # print()
             result[key] = (3 * multiplier) + high_card_in_combination + kicker
             flag_match = True
             continue
@@ -112,7 +108,6 @@ def play_poker(board, hands, test_run=False):
     if test_run:
         return result.rstrip()
     else:
-        # print(sorted_hands)
         print(result.rstrip())
 
 
