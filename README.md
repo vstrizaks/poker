@@ -6,3 +6,6 @@ No additional library is required
 
 Start to play:
 python3 play.py
+
+Unittest:
+To run unittest pytest is required

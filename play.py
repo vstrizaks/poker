@@ -4,16 +4,12 @@ from sys import stdin
 from functions import *
 from functions import check_two_pairs
 
-for str_line in stdin:
-    try:
-        board = str_line.split(" ", 1)[0]
-        hands = str_line.split(" ", 1)[1].split()
-    except Exception:
-        print("Incorrect input. Example: 4cKs4h8s7s Ad4s Ac4d As9s KhKd 5d6d")
-        continue
 
+def play_poker(board, hands, test_run=False):
     board_list = wrap(board, 2)
     hands_dict = {i: hands[i] for i in range(len(hands))}
+
+    multiplier = 10000000000
 
     flag_match = False
     result = {}
@@ -24,50 +20,59 @@ for str_line in stdin:
         board_and_hand.extend(hand)
         b, high_card = check_straight_flush(board_and_hand)
         if b:
-            result[key] = 9
+            result[key] = 9 * multiplier + high_card
             flag_match = True
             continue
 
-        if check_four_of_a_kind(board_and_hand):
-            result[key] = 8
-            flag_match = True
-            continue
-
-        if check_full_house(board_and_hand):
-            result[key] = 7
-            flag_match = True
-            continue
-
-        b, suit = check_flush(board_and_hand)
+        b, high_card = check_four_of_a_kind(board_and_hand)
         if b:
-            result[key] = 6
+            result[key] = 8 * multiplier + high_card
+            flag_match = True
+            continue
+
+        b, high_card = check_full_house(board_and_hand)
+        if b:
+            result[key] = 7 * multiplier + high_card
+            flag_match = True
+            continue
+
+        b, suit, hand_index = check_flush(board_and_hand)
+        if b:
+            result[key] = hand_index
             flag_match = True
             continue
 
         b, high_card = check_straight(board_and_hand)
         if b:
-            result[key] = 5
+            result[key] = 5 * multiplier + high_card
             flag_match = True
             continue
 
-        if check_three_of_a_kind(board_and_hand):
-            result[key] = 4
+        b, high_card, kicker = check_three_of_a_kind(board_and_hand)
+        if b:
+            result[key] = 4 * multiplier + high_card + kicker
             flag_match = True
             continue
 
-        if check_two_pairs(board_and_hand):
-            result[key] = 3
+        b, high_card_in_combination, kicker = check_two_pairs(board_and_hand)
+        if b:
+            # print("board_and_hand: " + str(board_and_hand))
+            # print("high_card_in_combination: " + str(high_card_in_combination))
+            # print("kicker: " + str(kicker))
+            # print()
+            result[key] = (3 * multiplier) + high_card_in_combination + kicker
             flag_match = True
             continue
 
-        if check_one_pairs(board_and_hand):
-            result[key] = 2
+        b, high_card_in_combination, kicker = check_one_pairs(board_and_hand)
+        if b:
+            result[key] = 2 * multiplier + high_card_in_combination + kicker
             flag_match = True
             continue
 
-        result[key] = 1
+        result[key] = 1 * multiplier
         if not flag_match:
-            result_no_score[key] = find_high_card(board_and_hand)
+            result_no_score[key] = find_kicker(board_and_hand, [], kicker_count=5)
 
     if flag_match:
         sorted_hands = {
@@ -84,10 +89,6 @@ for str_line in stdin:
     equal_list = []
     for key in sorted_hands.keys():
         seporator = " "
-
-        if not flag_match:
-            result = result + hands_dict[key] + seporator
-            continue
 
         if key != int(list(sorted_hands.keys())[-1]):
             if sorted_hands_list[pos] == sorted_hands_list[pos + 1]:
@@ -108,5 +109,24 @@ for str_line in stdin:
         else:
             result = result + hands_dict[key] + seporator
 
-    print(result)
+    if test_run:
+        return result.rstrip()
+    else:
+        # print(sorted_hands)
+        print(result.rstrip())
 
+
+def main():
+    for str_line in stdin:
+        try:
+            board = str_line.split(" ", 1)[0]
+            hands = str_line.split(" ", 1)[1].split()
+        except Exception:
+            print("Incorrect input. Example: 4cKs4h8s7s Ad4s Ac4d As9s KhKd 5d6d")
+            continue
+
+        play_poker(board, hands)
+
+
+if __name__ == "__main__":
+    main()
