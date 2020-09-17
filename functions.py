@@ -34,7 +34,11 @@ def check_four_of_a_kind(hand):
         value_counts[v] += 1
     for key, val in value_counts.items():
         if val == 4:
-            return True, card_order_dict[key]
+            return (
+                True,
+                (card_order_dict[key] * 100)
+                + find_kicker(hand, [card_order_dict[key]], kicker_count=1),
+            )
     return False, 0
 
 
@@ -54,7 +58,8 @@ def check_full_house(hand):
                 high_card = key
     if list_of_keys:
         for key, val in value_counts.items():
-            if key not in list_of_keys and val >= 2:
+            # if key not in list_of_keys and val >= 2:
+            if key != high_card and val >= 2:
                 list_of_keys.append(key)
                 if key > pair_card:
                     pair_card = key
