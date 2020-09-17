@@ -108,6 +108,7 @@ def play_poker(board, hands, test_run=False):
     if test_run:
         return result.rstrip()
     else:
+        # print(sorted_hands)
         print(result.rstrip())
 
 

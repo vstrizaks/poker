@@ -46,6 +46,7 @@ def check_full_house(hand):
         value_counts[card_order_dict[v]] += 1
     list_of_keys = []
     high_card = 0
+    pair_card = 0
     for key, val in value_counts.items():
         if val >= 3:
             list_of_keys.append(key)
@@ -55,9 +56,11 @@ def check_full_house(hand):
         for key, val in value_counts.items():
             if key not in list_of_keys and val >= 2:
                 list_of_keys.append(key)
+                if key > pair_card:
+                    pair_card = key
 
     if len(list_of_keys) >= 2:
-        return True, high_card
+        return True, (high_card * 100) + (pair_card)
     else:
         return False, 0
 
@@ -67,7 +70,7 @@ def generate_hand_index(hand):
     rank_values = [card_order_dict[i] for i in values]
     rank_values.sort(reverse=True)
     hand_index = 6
-    for v in rank_values:
+    for v in rank_values[:5]:
         hand_index *= 100
         hand_index += v
     return hand_index
