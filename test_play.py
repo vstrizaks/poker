@@ -106,6 +106,28 @@ import pytest
             ["8d4s", "6h4c", "7h4c", "5s4s", "4h3c"],
             "4h3c 5s4s 6h4c 7h4c 8d4s",
         ),
+        ("2h5c8sAsKc", ["Qs9h", "KdQh", "3cKh", "Jc6s"], "Jc6s Qs9h 3cKh KdQh",),
+        (
+            "3d4s5dJsQd",
+            ["5c4h", "7sJd", "KcAs", "9h7h", "2dTc", "Qh8c", "TsJc"],
+            "9h7h 2dTc KcAs 7sJd TsJc Qh8c 5c4h",
+        ),
+        (
+            "3s7sAhQhTd",
+            ["8h4s", "9c4h", "Kd9s", "3hTs", "9h6c", "TcKh", "6sKs", "8cAs", "2c6h"],
+            "2c6h 8h4s 9c4h=9h6c 6sKs Kd9s TcKh 8cAs 3hTs",
+        ),
+        (
+            "4c5c6c9cJs",
+            ["6hTh", "8d2s", "5h9s", "KcTc", "3d4d", "3s8c", "7hKs", "9h5s"],
+            "8d2s 7hKs 3d4d 6hTh 5h9s=9h5s 3s8c KcTc",
+        ),
+        (
+            "2c5h6h9cAs",
+            ["Jc8c", "Td7c", "3s2s", "TcKc", "9sTs", "8s4h", "Th6d", "7s8h", "QsAh"],
+            "8s4h Td7c Jc8c TcKc 3s2s Th6d 9sTs QsAh 7s8h",
+        ),
+        ("2h5d6s9sKs", ["QcAc", "6d8c", "4h8h", "6cJs"], "4h8h QcAc 6d8c 6cJs",),
     ],
 )
 def test_poker(board, hands, expected_result):

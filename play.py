@@ -66,7 +66,7 @@ def play_poker(board, hands, test_run=False):
             flag_match = True
             continue
 
-        result[key] = 1 * multiplier
+        result[key] = find_kicker(board_and_hand, [], kicker_count=5)
         if not flag_match:
             result_no_score[key] = find_kicker(board_and_hand, [], kicker_count=5)
 
