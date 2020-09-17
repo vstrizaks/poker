@@ -156,21 +156,16 @@ def check_two_pairs(hand):
     value_counts = defaultdict(lambda: 0)
     for v in values:
         value_counts[v] += 1
-    counter = 0
-    first_high_card = 0
-    second_high_card = 0
+    carts_list = []
     for key, val in value_counts.items():
-        if val == 2:
-            counter += 1
-            if card_order_dict[key] > first_high_card:
-                if first_high_card > second_high_card:
-                    second_high_card = first_high_card
-                first_high_card = card_order_dict[key]
-    if counter >= 2:
+        if val == 2 and card_order_dict[key] not in carts_list:
+            carts_list.append(card_order_dict[key])
+    if len(carts_list) >= 2:
+        carts_list.sort(reverse=True)
         return (
             True,
-            first_high_card * 100000000,
-            find_kicker(hand, [first_high_card, second_high_card]),
+            (carts_list[0] * 100000000) + (carts_list[1] * 100000),
+            find_kicker(hand, [carts_list[0], carts_list[1]]),
         )
     else:
         return False, 0, 0

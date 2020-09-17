@@ -84,7 +84,7 @@ import pytest
         (
             "7cJh4c2dJd",
             ["7d4s", "7h2c", "7h9c", "6sQs", "Kh2c"],
-            "6sQs 7d4s=7h2c 7h9c Kh2c",
+            "6sQs Kh2c 7d4s=7h2c 7h9c",
         ),
         (
             "7c4h2c4d7d",
@@ -128,6 +128,17 @@ import pytest
             "8s4h Td7c Jc8c TcKc 3s2s Th6d 9sTs QsAh 7s8h",
         ),
         ("2h5d6s9sKs", ["QcAc", "6d8c", "4h8h", "6cJs"], "4h8h QcAc 6d8c 6cJs",),
+        (
+            "9h9sAdAsTd",
+            ["7c7h", "Qd5s", "KsKc", "ThAh", "5h3c", "3s3d", "QhTc", "Qc8s", "6c4d"],
+            "3s3d=5h3c=6c4d=7c7h Qc8s=Qd5s QhTc KsKc ThAh",
+        ),
+        (
+            "2c4s8cKcKh",
+            ["Qd4c", "3h9h", "As9d", "3s6d", "KdAc", "TsTc", "2hTd", "2d8h"],
+            "3s6d 3h9h As9d 2hTd Qd4c 2d8h TsTc KdAc",
+        ),
+        ("3h5dJcJsTc", ["3sQh", "2s5c", "6cAc", "7cKs"], "7cKs 6cAc 3sQh 2s5c",),
     ],
 )
 def test_poker(board, hands, expected_result):
